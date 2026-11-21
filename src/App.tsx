@@ -96,7 +96,7 @@ export default function App() {
   });
   const [showConnectModal, setShowConnectModal] = useState(false);
   const [connectModalMode, setConnectModalMode] = useState<
-    "api" | "strava" | "file" | "openrouter" | "groq" | "weather" | "shiftwork"
+    "api" | "strava"  | "garmin"| "file" | "openrouter" | "groq" | "weather" | "shiftwork"
   >("api");
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncError, setSyncError] = useState<string | null>(null);
@@ -111,7 +111,7 @@ export default function App() {
   const [pendingRouteId, setPendingRouteId] = useState<string | null>(null);
 
   const handleOpenSettings = useCallback(
-    (mode?: "api" | "strava" | "file" | "openrouter" | "groq" | "weather" | "shiftwork") => {
+    (mode?: "api" | "strava"  | "garmin"| "file" | "openrouter" | "groq" | "weather" | "shiftwork") => {
       if (mode) {
         setConnectModalMode(mode);
       } else if (activeTab === "weather") {
