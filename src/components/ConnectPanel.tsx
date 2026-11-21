@@ -177,6 +177,8 @@ export const ConnectPanel: React.FC<ConnectPanelProps> = ({
     }
     return "";
   });
+  const [garminUsername, setGarminUsername] = useState("");
+const [garminPassword, setGarminPassword] = useState("");
   const [stravaClientId, setStravaClientId] = useState("");
   const [stravaClientSecret, setStravaClientSecret] = useState("");
   const [stravaFtp, setStravaFtp] = useState<number | "">(() => {
@@ -1113,6 +1115,91 @@ export const ConnectPanel: React.FC<ConnectPanelProps> = ({
             </button>
           </form>
         )}
+
+        {/* ============================ */}
+{/* GARMIN MODE */}
+{/* ============================ */}
+{mode === " garmin " && (
+  <div className="mt-6 space-y-4">
+    <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/60 p-5">
+      <div className="flex items-center gap-2 mb-2">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-black text-white font-bold text-sm">
+          G
+        </div>
+        <div>
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+            Garmin Connect
+          </h3>
+          <p className="text-xs text-slate-600 dark:text-slate-400">
+            Zaloguj się loginem i hasłem z Garmin Connect. Pobiera 50 najnowszych aktywności.
+          </p>
+        </div>
+      </div>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSyncGarmin({
+            username: garminUsername,
+            password: garminPassword,
+            rememberSession,
+          });
+        }}
+        className="mt-3 space-y-3"
+      >
+        <div>
+          <label className="block text-[11px] font-medium text-slate-700 dark:text-slate-300 mb-1">
+            Login / E-mail 【entity-Garmin¦canonical_name=Garmin】
+          </label>
+          <input
+            type="text"
+            value={garminUsername}
+            onChange={(e) => setGarminUsername(e.target.value)}
+            placeholder="np. twoj@email.com"
+            className="w-full rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm"
+          />
+        </div>
+
+        <div>
+          <label className="block text-[11px] font-medium text-slate-700 dark:text-slate-300 mb-1">
+            Hasło 【entity-Garmin¦canonical_name=Garmin】
+          </label>
+          <input
+            type="password"
+            value={garminPassword}
+            onChange={(e) => setGarminPassword(e.target.value)}
+            placeholder="Wklej hasło Garmin..."
+            className="w-full rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm"
+          />
+        </div>
+
+        <label className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+          <input
+            type="checkbox"
+            checked={rememberSession}
+            onChange={(e) => setRememberSession(e.target.checked)}
+            className="h-4 w-4 rounded border-slate-300 text-black"
+          />
+          <span>Zapamiętaj sesję Garmin w tej przeglądarce</span>
+        </label>
+
+        <button
+          type="submit"
+          disabled={isSyncing || !garminUsername.trim() || !garminPassword.trim()}
+          className="w-full flex items-center justify-center gap-2 rounded-xl bg-black hover:bg-slate-800 text-white px-4 py-2 text-sm font-medium disabled:opacity-50"
+        >
+          <span>{isSyncing ? "Pobieranie aktywności..." : "Synchronizuj z Garmin"}</span>
+        </button>
+      </form>
+    </div>
+
+    {error && (
+      <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+        <span>{error}</span>
+      </div>
+    )}
+  </div>
+)}
 
         {/* ================================================================ */}
         {/* FILE IMPORT MODE */}
