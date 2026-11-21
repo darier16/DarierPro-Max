@@ -688,7 +688,8 @@ export default function App() {
             onSyncServerEnv={() =>
               performApiSync({ athleteId: initialAthleteId })
             }
-            onSyncStrava={performStravaSync}
+            onSyncStrava={performStravaSync} 
+            onSyncGarmin={performGarminSync}
             onImportFile={(imported) => {
               setPayload(imported);
               setSyncError(null);
