@@ -70,9 +70,14 @@ interface ConnectPanelProps {
     fetchAll?: boolean;
     syncMode?: "all" | "missing_period" | "incremental";
   }) => Promise<void>;
+    onSyncGarmin: (opts: {
+    username: string;
+    password: string;
+    rememberSession: boolean;
+  }) => Promise<void>;
   onImportFile: (payload: IntervalsSyncPayload) => void;
   onCancel?: () => void;
-  initialMode?: "api" | "strava" | "file" | "openrouter" | "groq" | "weather" | "shiftwork";
+  initialMode?: "api" | "strava" | "garmin" | "file" | "openrouter" | "groq" | "weather" | "shiftwork";
 }
 
 export const ConnectPanel: React.FC<ConnectPanelProps> = ({
@@ -83,6 +88,7 @@ export const ConnectPanel: React.FC<ConnectPanelProps> = ({
   onSyncApi,
   onSyncServerEnv,
   onSyncStrava,
+  onSyncGarmin,
   onImportFile,
   onCancel,
   initialMode = "api",
