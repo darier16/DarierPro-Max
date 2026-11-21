@@ -3,6 +3,7 @@ import express from "express";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { GarminConnect } from "garmin-connect";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -3716,6 +3717,23 @@ async function startServer() {
     app.use(vite.middlewares);
   }
 
+
+
+app.post("/api/ garmin/sync", async (req, res) => {
+  try {
+    const { username, password } = req.body || {};
+    if (!username || !password) {
+      return res.status(400).json({ error: "Brak loginu lub hasła Garmin" });
+    }
+    const GC = new GarminConnect();
+    await GC.login(username, password);
+    const activities = await GC.getActivities(0, 50);
+    res.json({ ok: true, activities });
+  } catch (e: any) {
+    console.error("Garmin sync error:", e);
+    res.status(500).json({ error: e?.message || "Błąd synchronizacji z Garmin" });
+  }
+});
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`CadenceLab server running on http://0.0.0.0:${PORT}`);
   });
