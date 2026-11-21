@@ -38,11 +38,12 @@ import {
 
 const SESSION_KEY = "darierpro_intervals_session";
 const STRAVA_SESSION_KEY = "darierpro_strava_session";
+const GARMIN_SESSION_KEY = "darierpro_garmin_session";
 const CACHED_PAYLOAD_KEY = "darierpro_cached_payload";
 const THEME_KEY = "darierpro_theme";
 
 interface StoredCreds {
-  service?: "intervals" | "strava";
+  service?: "intervals" | "strava" | "garmin";
   athleteId: string;
   accessToken: string;
   userFtp?: number;
