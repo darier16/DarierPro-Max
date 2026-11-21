@@ -574,6 +574,18 @@ export const ConnectPanel: React.FC<ConnectPanelProps> = ({
             <span>Strava</span>
           </button>
           <button
+  type="button"
+  onClick={() => setMode("garmin")}
+  className={`flex items-center justify-center gap-1.5 px-2 py-2 rounded-md text-xs font-medium ${
+    mode === "garmin"
+      ? "bg-black text-white shadow-xs"
+      : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+  }`}
+>
+  <Watch className="h-3.5 w-3.5" />
+  <span>Garmin</span>
+</button>
+          <button
             type="button"
             onClick={() => setMode("openrouter")}
             className={`flex items-center justify-center gap-1.5 rounded-lg py-2 px-2 text-xs font-bold transition-all cursor-pointer ${
