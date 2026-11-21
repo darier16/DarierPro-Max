@@ -198,7 +198,36 @@ export default function App() {
     },
     []
   );
-
+  // Garmin - synchronizacja aktywności
+  const performGarminSync = useCallback(
+    async (opts: { username: string; password: string }) => {
+      setIsSyncing(true);
+      setSyncError(null);
+      try {
+        const res = await fetch("/api/garmin/sync", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: opts.username,
+            password: opts.password,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data?.error || "Błąd Garmin");
+        setPayload((prev: any) => ({
+          ...prev,
+          garminActivities: data.activities || [],
+        }));
+        return data;
+      } catch (err: any) {
+        setSyncError(err?.message || "Błąd podczas synchronizacji z Garmin");
+        throw err;
+      } finally {
+        setIsSyncing(false);
+      }
+    },
+    []
+  );
   const performStravaSync = useCallback(
     async (opts: {
       accessToken: string;
