@@ -94,7 +94,7 @@ export const ConnectPanel: React.FC<ConnectPanelProps> = ({
   initialMode = "api",
 }) => {
   const [mode, setMode] = useState<
-    "api" | "strava" | "file" | "openrouter" | "groq" | "weather" | "shiftwork"
+    "api" | "strava" | "garmin" | "file" | "openrouter" | "groq" | "weather" | "shiftwork"
   >(initialMode === "groq" ? "openrouter" : initialMode);
   const [athleteId, setAthleteId] = useState(initialAthleteId || "0");
   const [accessToken, setAccessToken] = useState("");
